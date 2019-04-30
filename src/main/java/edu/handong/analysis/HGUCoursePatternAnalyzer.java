@@ -55,48 +55,7 @@ public class HGUCoursePatternAnalyzer {
 	 * @param lines
 	 * @return
 	 */
-	private Student[] initiateStudentArrayFromLines(String[] lines) {
-		/*int j = 0;
-
-		for( int i=0; i<numOfStudents; i++ ) {
-			if( i>0 ){
-				while(lines!=null){
-					if( lines[j].split(",")[1].trim().equals(students[i-1].getName()) ){
-						j++;
-					}
-					else break;
-				}
-			}
-			students[i] = new Student(lines[j].split(",")[1].trim() );
-		}
-		return students;*/
-
-		/*int j = 0;
-		int check = 0;
-
-		for( int i=0; i<numOfStudents; i++ ) {
-			if( i>0 ){
-				check=0;
-
-				while(lines!=null){
-					check=0;
-					for( int k=0; k<i ; k++ ){
-						if( lines[j].split(",")[1].trim().equals(students[k].getName()) ) {
-							check=1;
-							break;
-						}
-					}
-					if( check == 1 ){
-						j++;
-					}
-					else break;
-				}
-
-			}
-			students[i] = new Student(lines[j].split(",")[1].trim() );
-		}
-		return students;*/
-		
+	private Student[] initiateStudentArrayFromLines(String[] lines) {		
 		int j = 0;
 
 		for( int i=0; i<numOfStudents; i++ ) {
@@ -140,18 +99,6 @@ public class HGUCoursePatternAnalyzer {
 	 * @return
 	 */
 	private Course[] initiateCourseArrayFromLines(String[] lines) {
-		/*
-		for( int i=0; i<numOfCourses ; i++ ) {
-			courses[i] = new Course( lines[i].split(",")[2].trim() );
-		}
-		return courses;
-		*/
-
-					// 놓쳣던 부분: 중복검사, check의 초기화, 객체들의 배열의 생성문제
-					// 이미 저장된 과목들과의 중복을 검사한다.
-					// 중복이 된다면 check를 1로 두고, lines에서 다음줄을 읽기 위해 j를 증가시킨다. 그 후에 다음줄과 이미 저장된
-					// 과목들배열을 처음부터 다시 검사한다.
-					// 중복이 되는 것이 없다면, break로 반복문을 나와서 courses에 저장해준다!
 		int j = 0;
 
 		for( int i=0; i<numOfCourses; i++ ) {
