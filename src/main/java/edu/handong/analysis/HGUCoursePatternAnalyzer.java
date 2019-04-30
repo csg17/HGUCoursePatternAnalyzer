@@ -5,24 +5,24 @@ import edu.handong.analysis.datamodel.Student;
 
 public class HGUCoursePatternAnalyzer {
 	
-	String[] lines = {	"1999-1, JC Nam, Java Programming",
-						"1999-2, JC Nam, Programming Language Theory",
-						"1999-1, JC Nam, Data Structures",
-						"2001-1, JC Nam, Database Systems",
-						"2018-1, SB Lim, Java Programming",
-						"2018-2, SB Lim, Programming Language Theory",
-						"2019-1, SB Lim, Data Structures",
-						"2019-1, SB Lim, Algorithm Analysis",
-						"2018-1, SJ Kim, Java Programming",
-						"2018-2, SJ Kim, Programming Language Theory",
-						"2019-1, SJ Kim, Logic Design",
-						"2019-1, SJ Kim, Algorithm Analysis",
-						};
+	private String[] lines = {	"1999-1, JC Nam, Java Programming",
+								"1999-2, JC Nam, Programming Language Theory",
+								"1999-1, JC Nam, Data Structures",
+								"2001-1, JC Nam, Database Systems",
+								"2018-1, SB Lim, Java Programming",
+								"2018-2, SB Lim, Programming Language Theory",
+								"2019-1, SB Lim, Data Structures",
+								"2019-1, SB Lim, Algorithm Analysis",
+								"2018-1, SJ Kim, Java Programming",
+								"2018-2, SJ Kim, Programming Language Theory",
+								"2019-1, SJ Kim, Logic Design",
+								"2019-1, SJ Kim, Algorithm Analysis",
+								};
 
-	int numOfStudents;
-	int numOfCourses;
-	Student[] students;
-	Course[] courses;
+	private int numOfStudents;
+	private int numOfCourses;
+	private Student[] students;
+	private Course[] courses;
 	
 	/**
 	 * This method runs our analysis logic to get the list of student and course names from lines.
