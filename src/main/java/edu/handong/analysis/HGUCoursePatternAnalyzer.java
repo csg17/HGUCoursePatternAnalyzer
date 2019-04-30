@@ -71,7 +71,7 @@ public class HGUCoursePatternAnalyzer {
 		}
 		return students;*/
 
-		int j = 0;
+		/*int j = 0;
 		int check = 0;
 
 		for( int i=0; i<numOfStudents; i++ ) {
@@ -95,6 +95,21 @@ public class HGUCoursePatternAnalyzer {
 			}
 			students[i] = new Student(lines[j].split(",")[1].trim() );
 		}
+		return students;*/
+		
+		int j = 0;
+
+		for( int i=0; i<numOfStudents; i++ ) {
+			if( i>0 ){
+				while(lines!=null){
+					Student tempStudent = new Student( lines[j].split(",")[1].trim() );
+					
+					if( studentExist(students, tempStudent) ) j++;
+					else break;
+				}
+			}
+			students[i] = new Student(lines[j++].split(",")[1].trim() );
+		}
 		return students;
 	}
 
@@ -105,14 +120,17 @@ public class HGUCoursePatternAnalyzer {
 	 * @return boolean
 	 */
 	private boolean studentExist(Student[] students, Student student) {
-		int i=0;
-		
-		while( students!=null ) {
-			if( students[i].getName().equals(student) )
-				return true;
-			i++;
-		}
+		int k=0;
 
+		while( students!=null ) {
+			if( students[k].getName().equals(student.getName()) )
+				return true;
+			else {	
+				k++;
+				if(students[k]==null) return false;
+			}
+		}
+		
 		return false;
 	}
 	
@@ -128,34 +146,24 @@ public class HGUCoursePatternAnalyzer {
 		}
 		return courses;
 		*/
-		int j = 0;
-		int check = 0;
 
-		for( int i=0; i<numOfCourses; i++ ) {
-			if( i>0 ){
-				check=0;
-
-				while(lines!=null){
-					check=0;
 					// 놓쳣던 부분: 중복검사, check의 초기화, 객체들의 배열의 생성문제
 					// 이미 저장된 과목들과의 중복을 검사한다.
 					// 중복이 된다면 check를 1로 두고, lines에서 다음줄을 읽기 위해 j를 증가시킨다. 그 후에 다음줄과 이미 저장된
 					// 과목들배열을 처음부터 다시 검사한다.
 					// 중복이 되는 것이 없다면, break로 반복문을 나와서 courses에 저장해준다!
-					for( int k=0; k<i ; k++ ){
-						if( lines[j].split(",")[2].trim().equals(courses[k].getCourseName()) ) {
-							check=1;
-							break;
-						}
-					}
-					if( check == 1 ){
-						j++;
-					}
+		int j = 0;
+
+		for( int i=0; i<numOfCourses; i++ ) {
+			if( i>0 ){
+				while(lines!=null){
+					Course tempCourse = new Course( lines[j].split(",")[2].trim() );
+					
+					if( courseExist(courses, tempCourse) ) j++;
 					else break;
 				}
-
 			}
-			courses[i] = new Course(lines[j].split(",")[2].trim() );
+			courses[i] = new Course(lines[j++].split(",")[2].trim() );
 		}
 		return courses;
 	}
@@ -167,15 +175,18 @@ public class HGUCoursePatternAnalyzer {
 	 * @return boolean
 	 */
 	private boolean courseExist(Course[] courses, Course course) {
-		int i = 0;
-		
+		int k=0;
+
 		while( courses!=null ) {
-			if( courses[i].getCourseName().equals(course) )
+			if( courses[k].getCourseName().equals(course.getCourseName()) )
 				return true;
-			i++;
+			else {	
+				k++;
+				if(courses[k]==null) return false;
+			}
 		}
+		
 		return false;
 	}
-
 }
 
