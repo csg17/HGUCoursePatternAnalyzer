@@ -4,21 +4,25 @@ import edu.handong.analysis.datamodel.Course;
 import edu.handong.analysis.datamodel.Student;
 import java.util.*;
 import java.util.ArrayList;
+import java.util.Iterator;
+
+import edu.handong.analysis.utils.NotEnoughArgumentException;
 import edu.handong.analysis.utils.Utils;
 
 public class HGUCoursePatternAnalyzer {
 	
-	private int numOfStudents;
-	private int numOfCourses;
+	//private int numOfStudents;
+	//private int numOfCourses;
 	private ArrayList<Student> students = new ArrayList<Student>(); 
 	private ArrayList<Course> courses = new ArrayList<Course>();
-	public HashMap<String, Student> students_hash = new HashMap<>();
+	private HashMap<String, Student> students_hash = new HashMap<String, Student>();
 	
 	/**
 	 * This method runs our analysis logic to get the list of student and course names from lines.
 	 * @param args
+	 * @throws NotEnoughArgumentException 
 	 */
-	public void run(String[] args) {
+	public void run(String[] args) throws NotEnoughArgumentException {
 		
 		//numOfStudents = Integer.parseInt(args[0]);
 		//numOfCourses = Integer.parseInt(args[1]);
@@ -26,7 +30,8 @@ public class HGUCoursePatternAnalyzer {
 		
 		//students = new Student[numOfStudents];
 		students_hash = loadStudentsCourseRecords(Utils.getLines(args[0], true));
-		Utils.writeAFile(countNumberOfCoursesTakenInEachSemester(students_hash), args[2] );
+		TreeMap<String, Student> treemap = new TreeMap(students_hash);
+		Utils.writeAFile( countNumberOfCoursesTakenInEachSemester(students_hash), treemap, args[1] );
 		/*students = initiateStudentArrayFromLines(getLines(args[0], true));
 		
 		System.out.println("Number of All Students: " + numOfStudents);
@@ -87,7 +92,7 @@ public class HGUCoursePatternAnalyzer {
 	private boolean studentExist(ArrayList<Student> students, Course course) {
 		Student[] arrr = new Student[students.size()];
 		
-		for(int i=0;i<students.size();i++) {
+		for(int i=0; i<arrr.length; i++) {
 			arrr[i] = students.get(i);
 		}
 		for(int i=0; i<arrr.length; i++) {
@@ -148,19 +153,21 @@ public class HGUCoursePatternAnalyzer {
 	//hash map을 리턴한다.
 	private HashMap<String, Student> loadStudentsCourseRecords(ArrayList<String> lines){
 		HashMap<String, Student> students_thash = new HashMap<String, Student>();
+		
 		String[] arr = new String[lines.size()];
-		arr = (String[])lines.toArray(arr);
-		/*int size = 0;
+		int size = 0;
 		
 		for(String student: lines) {
 			arr[size++] = student;
-		}*/
-		
+		}
+		Course[] courseArr = new Course[lines.size()];
+
 		for( int i=0; i<lines.size(); i++ ) {
-			Course newCourse = new Course( arr[i] );
-			courses.add(newCourse);
+			Course newCourse = new Course(arr[i]);
 			
-			if(!studentExist(students, newCourse)) {
+			courseArr[i]=newCourse;
+			
+			if( students!=null && !studentExist(students, newCourse)) {
 				// 동일한 학생이 없다면 새로운 학생을 추가해준다. 
 				Student newStudent = new Student(newCourse.getStudentId());
 				newStudent.addCourse(newCourse);
@@ -179,12 +186,27 @@ public class HGUCoursePatternAnalyzer {
 		ArrayList<String> numOfCourse = new ArrayList<String>();
 		int size = sortedStudents.size();
 		int totalNumSemester = 0;
+		Student stud = new Student();
 		
-		for(int i=1; i<=size; i++) {
+		/*System.out.print(sortedStudents);
+		for(int i=0; i<size; i++) {
 			Student stud = sortedStudents.get(Integer.toString(i));
-			System.out.print(stud.getName());
+			//System.out.print(stud.getName());
 			
 			totalNumSemester = stud.getSemestersByYearAndSemester().size();
+			for(int j=1; j<=totalNumSemester; j++) {
+				numOfCourse.add(Integer.toString(stud.getNumCourseInNthSemester(j)));
+			}
+		}
+		*/
+		java.util.Iterator iter = sortedStudents.keySet().iterator();
+		for(Map.Entry<String, Student> entry: sortedStudents.entrySet()) {
+			stud = entry.getValue();
+			
+			HashMap<String, Integer> temp = stud.getSemestersByYearAndSemester();
+			TreeMap<String, Integer> treetemp = new TreeMap(temp);
+			totalNumSemester = treetemp.size();
+			
 			for(int j=1; j<=totalNumSemester; j++) {
 				numOfCourse.add(Integer.toString(stud.getNumCourseInNthSemester(j)));
 			}

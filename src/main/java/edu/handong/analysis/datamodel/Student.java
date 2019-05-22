@@ -5,7 +5,7 @@ import java.util.*;
 public class Student{
 	private String studentID;
 	private ArrayList<Course> coursesTaken = new ArrayList<Course>(); // 학생이 들은 수업 목록
-	private HashMap<String,Integer> semestersByYearAndSemester =  new HashMap<>(); // key: Year-Semester e.g., 2003-1, 
+	private HashMap<String,Integer> semestersByYearAndSemester =  new HashMap<String,Integer>(); // key: Year-Semester e.g., 2003-1, 
 
 	public Student( String studentID ) {
 		this.studentID = studentID;
@@ -20,18 +20,20 @@ public class Student{
 	public ArrayList<Course> getCourseTaken(){
 		return coursesTaken;
 	}
+	
 	public HashMap<String,Integer> getSemestersByYearAndSemester(){
 		int semester = 0;
-		HashMap<String, Integer> sem = new HashMap<>();
+		HashMap<String, Integer> sem = new HashMap<String, Integer>();
 		
 		for( Course course : coursesTaken ) {
 			// 2019-1 형태로 만들어주기.
 			String ys = new String( course.getYearTaken() + "-" + course.getSemester() );
-			if( !sem.containsKey(ys) ) { 
+			if( !semestersByYearAndSemester.containsKey(ys) ) { 
 				semester++; 
-				sem.put( ys, semester);
+				semestersByYearAndSemester.put( ys, semester);
 			}
 		}
+	
 		return semestersByYearAndSemester;
 	}
 	
